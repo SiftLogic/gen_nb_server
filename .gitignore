@@ -1,3 +1,9 @@
 ebin/*.beam
 priv/example/ebin
 doc
+*.html
+ebin/
+erlang.png
+stylesheet.css
+erl_crash.dump
+edoc-info
