@@ -53,28 +53,18 @@ behaviour_info(callbacks) ->
 behaviour_info(_) ->
     undefined.
 
-%% @spec start_link({local, Name}, CallbackModule, IpAddr, Port, InitParams) -> Result
-%% Name = atom()
-%% CallbackModule = atom()
-%% IpAddr = string()
-%% Port = integer()
-%% InitParams = [any()]
-%% Result = {ok, pid()} | {error, any()}
 %% @doc Start server listening on IpAddr:Port
+-spec start_link({local, atom()}, atom(), string(), integer(), [any()]) -> {ok, pid()} | {error, any()}.
 start_link({local, Name}, CallbackModule, IpAddr, Port, InitParams) ->
     gen_server:start_link({local, Name}, ?MODULE, [CallbackModule, IpAddr, Port, InitParams], []).
 
-%% @spec start_link(CallbackModule, IpAddr, Port, InitParams) -> Result
-%% CallbackModule = atom()
-%% IpAddr = string()
-%% Port = integer()
-%% InitParams = [any()]
-%% Result = {ok, pid()} | {error, any()}
 %% @doc Start server listening on IpAddr:Port
+-spec start_link(atom(), string(), integer(), [any()]) -> {ok, pid()} | {error, any()}.
 start_link(CallbackModule, IpAddr, Port, InitParams) ->
     gen_server:start_link(?MODULE, [CallbackModule, IpAddr, Port, InitParams], []).
 
 %% @hidden
+-spec init(list()) -> ok | {error, any()}.
 init([CallbackModule, IpAddr, Port, InitParams]) ->
     case CallbackModule:init(InitParams) of
         {ok, ServerState} ->
